@@ -4,7 +4,9 @@ import entity.Student;
 import entity.UserInformation;
 import enums.Grade;
 import enums.UniversityType;
+import exceptions.ValidationException;
 import service.StudentService;
+import util.Validation;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -15,6 +17,7 @@ public class Main {
     static Scanner scanner = new Scanner(System.in);
 
     private static final StudentService STUDENT_SERVICE = StudentService.getInstance();
+
 
     public static void printMenu(String[] options) {
         for (String option : options) {
@@ -95,12 +98,18 @@ public class Main {
 
         System.out.println("password: ");
         String password = scanner.next();
-        UserInformation userInformation = new UserInformation(nationalID, password);
 
-        Student student = new Student(userInformation, firstName, lastName, motherName,
-                fatherName, birthCertificate, nationalID, date, studentNumber,
-                universityName, universityType1, date1, grade1);
-        STUDENT_SERVICE.signUp(student);
+        try {
+            Validation.isValidPassword(password);
+            UserInformation userInformation = new UserInformation(nationalID, password);
+
+            Student student = new Student(userInformation, firstName, lastName, motherName,
+                    fatherName, birthCertificate, nationalID, date, studentNumber,
+                    universityName, universityType1, date1, grade1);
+            STUDENT_SERVICE.signUp(student);
+        } catch (ValidationException e) {
+            System.out.println(e.getMessage());
+        }
 
 
     }
