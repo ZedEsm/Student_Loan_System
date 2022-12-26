@@ -1,5 +1,5 @@
 package enums;
 
 public enum UniversityType {
-    STATE,OPEN
+    STATE_DAILY, STATE_NIGHTLY, AZAD
 }

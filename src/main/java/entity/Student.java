@@ -1,5 +1,7 @@
 package entity;
 
+import enums.Grade;
+import enums.UniversityType;
 import lombok.*;
 
 import javax.persistence.*;
@@ -11,13 +13,16 @@ import java.util.Date;
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor
+@EqualsAndHashCode
 public class Student {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id", nullable = false)
-    private int id;
+    @Column(name = "id")
+    int id;
+    @OneToOne(cascade = CascadeType.ALL)
+    UserInformation userInformation;
     @Column(nullable = false)
-    String FirstName;
+    String firstName;
     @Column(nullable = false)
     String lastName;
     @Column(nullable = false)
@@ -32,4 +37,28 @@ public class Student {
     Date birthdate;
     @Column(nullable = false)
     String studentNumber;
+    @Column(nullable = false)
+    String universityName;
+    @Enumerated(EnumType.STRING)
+    UniversityType universityType;
+    @Temporal(value = TemporalType.DATE)
+    Date entryDate;
+    @Enumerated(EnumType.STRING)
+    Grade grade;
+
+    public Student(UserInformation userInformation, String firstName, String lastName, String motherName, String fatherName, String birthCertificate, String nationalID, Date birthdate, String studentNumber, String universityName, UniversityType universityType, Date entryDate, Grade grade) {
+        this.userInformation = userInformation;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.motherName = motherName;
+        this.fatherName = fatherName;
+        this.birthCertificate = birthCertificate;
+        this.nationalID = nationalID;
+        this.birthdate = birthdate;
+        this.studentNumber = studentNumber;
+        this.universityName = universityName;
+        this.universityType = universityType;
+        this.entryDate = entryDate;
+        this.grade = grade;
+    }
 }

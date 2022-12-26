@@ -1,5 +1,5 @@
 package enums;
 
-public enum Degree {
+public enum Grade {
     ASSOCIATE,BACHELOR,MASTER,PHD
 }
