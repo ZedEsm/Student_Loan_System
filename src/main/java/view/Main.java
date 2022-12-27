@@ -3,10 +3,15 @@ package view;
 import entity.Student;
 import entity.UserInformation;
 
+import entity.loan.Loan;
+import entity.loan.TuitionLoan;
 import enums.Grade;
 import enums.UniversityType;
+import exceptions.InappropriateLoanRequest;
 import exceptions.InvalidStudentException;
 import exceptions.ValidationException;
+import service.LoanService;
+import service.StudentLoanPayService;
 import service.StudentService;
 import util.Validation;
 
@@ -20,6 +25,11 @@ public class Main {
 
     private static final StudentService STUDENT_SERVICE = StudentService.getInstance();
 
+    private static final StudentLoanPayService STUDENT_LOAN_PAY_SERVICE = StudentLoanPayService.getInstance();
+
+    private static final LoanService LOAN_SERVICE = LoanService.getInstance();
+
+    private static final Loan[] LOANS = new Loan[16];
     private static Student student;
 
 
@@ -73,6 +83,8 @@ public class Main {
     }
 
     private static void loanMenu() {
+//        loanLst();
+//        addLoans();
         String[] options = {"1- Register for loan",
                 "2- Reimbursement",
                 "3- Exit",
@@ -111,7 +123,11 @@ public class Main {
             printMenu(options);
             option = scanner.nextInt();
             if (option == 1) {
-                tuitionLoanSystem();
+                try {
+                    tuitionLoanSystem();
+                } catch (InappropriateLoanRequest e) {
+                    System.out.println(e.getMessage());
+                }
 
             } else if (option == 2) {
                 educationLoanSystem();
@@ -132,11 +148,47 @@ public class Main {
 
     }
 
-    private static void tuitionLoanSystem() {
+    private static void tuitionLoanSystem() throws InappropriateLoanRequest {
+
+
         if(!student.getUniversityType().equals(UniversityType.STATE_DAILY)){
 
+            TuitionLoan tuitionLoan = LOAN_SERVICE.takeTuitionLoanByGrade(student.getGrade());
+            System.out.println(tuitionLoan);
+
+        }
+        else {
+            throw new InappropriateLoanRequest("No Loans Are Granted To This University");
         }
 
+    }
+
+    private static void loanLst() {
+        //TuitionLoan
+        LOANS[0] = new TuitionLoan(1300000, Grade.ASSOCIATE_DEGREE);
+        LOANS[1] = new TuitionLoan(1300000, Grade.CONTINUES_BACHELOR_DEGREE);
+        LOANS[2] = new TuitionLoan(1300000, Grade.DISCONTINUES_BACHELOR_DEGREE);
+        LOANS[3] = new TuitionLoan(2600000, Grade.CONTINUES_MASTER);
+        LOANS[4] = new TuitionLoan(2600000, Grade.CONTINUES_PHD);
+        LOANS[5] = new TuitionLoan(2600000, Grade.DISCONTINUES_MASTER);
+        LOANS[6] = new TuitionLoan(2600000, Grade.PROFESSIONAL_DOCTORATE);
+        LOANS[7] = new TuitionLoan(65000000, Grade.PROFESSIONAL_DOCTORATE);
+        //HousingLoan
+//        LOANS[8] = new HousingLoan();
+//        LOANS[9] = new HousingLoan();
+//        LOANS[10] = new HousingLoan();
+//        LOANS[11] = new HousingLoan();
+//        LOANS[12] = new HousingLoan();
+//        LOANS[13] = new HousingLoan();
+//        LOANS[14] = new HousingLoan();
+//        LOANS[15] = new HousingLoan();
+
+
+
+    }
+
+    private static void addLoans() {
+        LOAN_SERVICE.addLoan(Main.LOANS);
     }
 
 

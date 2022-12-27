@@ -3,17 +3,23 @@ package entity.loan;
 import enums.Grade;
 import lombok.*;
 
-import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
+import javax.persistence.*;
 
-@Entity
+
 @NoArgsConstructor
-@AllArgsConstructor
 @Getter
 @Setter
 @ToString(callSuper = true)
-public class TuitionLoan extends Loan{
+@Entity
+@DiscriminatorValue(value = "TUITION")
+public class TuitionLoan extends Loan {
+
+    @Column(unique = true)
     @Enumerated(EnumType.STRING)
     Grade grade;
+
+    public TuitionLoan(double price, Grade grade) {
+        super(price);
+        this.grade = grade;
+    }
 }

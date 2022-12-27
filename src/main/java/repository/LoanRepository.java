@@ -31,7 +31,7 @@ public class LoanRepository implements  IRepository <Loan>{
     public TuitionLoan takeTuitionLoanByGrade(Grade grade){
         EntityManager entityManager = DatabaseAccess.getEntityManager().createEntityManager();
         entityManager.getTransaction().begin();
-        Query query = entityManager.createQuery("from TuitionLoan t where t.grade=:grade");
+        Query query = entityManager.createQuery("from Loan t where t.grade=:grade");
         query.setParameter("grade", grade);
         TuitionLoan tuitionLoan = (TuitionLoan) query.getSingleResult();
         entityManager.getTransaction().commit();

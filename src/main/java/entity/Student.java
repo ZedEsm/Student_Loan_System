@@ -1,11 +1,14 @@
 package entity;
 
+import entity.loan.StudentLoanPay;
 import enums.Grade;
 import enums.UniversityType;
 import lombok.*;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @Getter
@@ -44,6 +47,9 @@ public class Student {
     Date entryDate;
     @Enumerated(EnumType.STRING)
     Grade grade;
+
+    @OneToMany(mappedBy = "student", fetch = FetchType.EAGER)
+    List<StudentLoanPay> studentLoanPayList=new ArrayList<>();
 
     public Student(UserInformation userInformation, String firstName, String lastName, String motherName, String fatherName, String birthCertificate, String nationalID, Date birthdate, String studentNumber, String universityName, UniversityType universityType, Date entryDate, Grade grade) {
         this.userInformation = userInformation;
