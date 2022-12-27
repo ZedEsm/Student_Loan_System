@@ -79,11 +79,14 @@ public class Main {
             loanMenu();
         } catch (InvalidStudentException e) {
             System.out.println(e.getMessage());
+        } catch (ParseException e) {
+            throw new RuntimeException(e);
         }
 
     }
 
-    private static void loanMenu() {
+    private static void loanMenu() throws ParseException {
+//        baraye, avalin, bar, ejra, faghat, uncomment, beshe, dafee, haye, baed, comment, beshe, 2, khat, paeen
 //        loanLst();
 //        addLoans();
         String[] options = {"1- Register for loan",
@@ -112,7 +115,7 @@ public class Main {
     }
 
 
-    private static void loanSystem() {
+    private static void loanSystem() throws ParseException {
         String[] options = {"1- TuitionLoan",
                 "2- EducationLoan",
                 "3- HousingLoan",
@@ -148,23 +151,33 @@ public class Main {
 
     }
 
-    private static void tuitionLoanSystem() throws InappropriateLoanRequest {
+    private static void tuitionLoanSystem() throws InappropriateLoanRequest, ParseException {
 
+        if (!student.getUniversityType().equals(UniversityType.STATE_DAILY)) {
 
-        // if(!student.getUniversityType().equals(UniversityType.STATE_DAILY)){
+            TuitionLoan tuitionLoan = LOAN_SERVICE.takeTuitionLoanByGrade(student.getGrade());
+            StudentLoanPay studentLoanPay = new StudentLoanPay(student, tuitionLoan, student.getGrade());
+            studentLoanPay.setLoan(tuitionLoan);
+            studentLoanPay.setStudent(student);
+            studentLoanPay.setGrade(student.getGrade());
+            System.out.println(studentLoanPay);
+            System.out.println("Card Number:");
+            String cardNumber = scanner.next();
+            System.out.println("CVV:");
+            String cvv = scanner.next();
+            System.out.println("EXP Date:");
+            String exp = scanner.next();
+            student.setCvv(cvv);
+            SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+            Date date = formatter.parse(exp);
+            student.setFinishDate(date);
+            student.setCardNumber(cardNumber);
+            STUDENT_SERVICE.update(student);
+            STUDENT_LOAN_PAY_SERVICE.save(studentLoanPay);
 
-        TuitionLoan tuitionLoan = LOAN_SERVICE.takeTuitionLoanByGrade(student.getGrade());
-        StudentLoanPay studentLoanPay = new StudentLoanPay(student, tuitionLoan, student.getGrade());
-        studentLoanPay.setLoan(tuitionLoan);
-        studentLoanPay.setStudent(student);
-        studentLoanPay.setGrade(student.getGrade());
-        System.out.println(studentLoanPay);
-        STUDENT_LOAN_PAY_SERVICE.save(studentLoanPay);
-
-//        }
-//        else {
-//            throw new InappropriateLoanRequest("No Loans Are Granted To This University");
-//        }
+        } else {
+            throw new InappropriateLoanRequest("No Loans Are Granted To This University");
+        }
 
     }
 

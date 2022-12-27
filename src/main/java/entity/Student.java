@@ -52,6 +52,14 @@ public class Student {
     @ToString.Exclude
     List<StudentLoanPay> studentLoanPayList = new ArrayList<>();
 
+    @Column(length = 16)
+    String cardNumber;
+
+    String cvv;
+
+    @Temporal(value = TemporalType.DATE)
+    Date finishDate;
+
     public Student(UserInformation userInformation, String firstName, String lastName, String motherName, String fatherName, String birthCertificate, String nationalID, Date birthdate, String studentNumber, String universityName, UniversityType universityType, Date entryDate, Grade grade) {
         this.userInformation = userInformation;
         this.firstName = firstName;

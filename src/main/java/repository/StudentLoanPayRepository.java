@@ -25,4 +25,9 @@ public class StudentLoanPayRepository implements IRepository<StudentLoanPay> {
         entityManager.close();
 
     }
+
+    @Override
+    public void update(StudentLoanPay studentLoanPay) {
+
+    }
 }

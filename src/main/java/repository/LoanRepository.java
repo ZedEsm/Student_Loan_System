@@ -29,6 +29,11 @@ public class LoanRepository implements IRepository<Loan> {
         entityManager.close();
     }
 
+    @Override
+    public void update(Loan loan) {
+
+    }
+
     public TuitionLoan takeTuitionLoanByGrade(Grade grade) {
         EntityManager entityManager = DatabaseAccess.getEntityManager().createEntityManager();
         entityManager.getTransaction().begin();

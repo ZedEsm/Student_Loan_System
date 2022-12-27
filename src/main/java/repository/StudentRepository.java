@@ -27,6 +27,15 @@ public class StudentRepository implements IRepository<Student> {
         entityManager.close();
     }
 
+    @Override
+    public void update(Student student) {
+        EntityManager entityManager = DatabaseAccess.getEntityManager().createEntityManager();
+        entityManager.getTransaction().begin();
+        entityManager.merge(student);
+        entityManager.getTransaction().commit();
+        entityManager.close();
+    }
+
     public Student checkUserExistence(String userName, String password) {
         EntityManager entityManager = DatabaseAccess.getEntityManager().createEntityManager();
         EntityTransaction transaction = entityManager.getTransaction();
@@ -38,6 +47,5 @@ public class StudentRepository implements IRepository<Student> {
         entityManager.getTransaction().commit();
         entityManager.close();
         return singleResult;
-
     }
 }

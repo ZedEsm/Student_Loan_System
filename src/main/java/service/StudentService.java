@@ -31,4 +31,8 @@ public class StudentService {
         throw new InvalidStudentException("Student with this username or password doesn't exist");
 
     }
+
+    public void update(Student student) {
+        STUDENT_REPOSITORY.update(student);
+    }
 }
