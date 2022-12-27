@@ -20,7 +20,7 @@ public class StudentLoanPayRepository implements IRepository<StudentLoanPay> {
     public void save(StudentLoanPay studentLoanPay) {
         EntityManager entityManager = DatabaseAccess.getEntityManager().createEntityManager();
         entityManager.getTransaction().begin();
-        entityManager.persist(studentLoanPay);
+        entityManager.merge(studentLoanPay);
         entityManager.getTransaction().commit();
         entityManager.close();
 

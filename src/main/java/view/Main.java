@@ -4,6 +4,7 @@ import entity.Student;
 import entity.UserInformation;
 
 import entity.loan.Loan;
+import entity.loan.StudentLoanPay;
 import entity.loan.TuitionLoan;
 import enums.Grade;
 import enums.UniversityType;
@@ -73,7 +74,7 @@ public class Main {
         String password = scanner.next();
 
         try {
-            student=STUDENT_SERVICE.signIn(userName, password);
+            student = STUDENT_SERVICE.signIn(userName, password);
             System.out.println("Sign In Successfully");
             loanMenu();
         } catch (InvalidStudentException e) {
@@ -131,8 +132,7 @@ public class Main {
 
             } else if (option == 2) {
                 educationLoanSystem();
-            }
-            else if (option == 3) {
+            } else if (option == 3) {
                 housingLoanSystem();
             }
 
@@ -151,15 +151,20 @@ public class Main {
     private static void tuitionLoanSystem() throws InappropriateLoanRequest {
 
 
-        if(!student.getUniversityType().equals(UniversityType.STATE_DAILY)){
+        // if(!student.getUniversityType().equals(UniversityType.STATE_DAILY)){
 
-            TuitionLoan tuitionLoan = LOAN_SERVICE.takeTuitionLoanByGrade(student.getGrade());
-            System.out.println(tuitionLoan);
+        TuitionLoan tuitionLoan = LOAN_SERVICE.takeTuitionLoanByGrade(student.getGrade());
+        StudentLoanPay studentLoanPay = new StudentLoanPay(student, tuitionLoan, student.getGrade());
+        studentLoanPay.setLoan(tuitionLoan);
+        studentLoanPay.setStudent(student);
+        studentLoanPay.setGrade(student.getGrade());
+        System.out.println(studentLoanPay);
+        STUDENT_LOAN_PAY_SERVICE.save(studentLoanPay);
 
-        }
-        else {
-            throw new InappropriateLoanRequest("No Loans Are Granted To This University");
-        }
+//        }
+//        else {
+//            throw new InappropriateLoanRequest("No Loans Are Granted To This University");
+//        }
 
     }
 
@@ -182,7 +187,6 @@ public class Main {
 //        LOANS[13] = new HousingLoan();
 //        LOANS[14] = new HousingLoan();
 //        LOANS[15] = new HousingLoan();
-
 
 
     }

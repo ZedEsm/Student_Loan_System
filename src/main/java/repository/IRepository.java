@@ -1,5 +1,5 @@
 package repository;
 
-public interface IRepository <E> {
+public interface IRepository<E> {
     void save(E e);
 }

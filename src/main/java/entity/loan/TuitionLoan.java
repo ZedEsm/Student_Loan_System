@@ -11,7 +11,6 @@ import javax.persistence.*;
 @Setter
 @ToString(callSuper = true)
 @Entity
-@DiscriminatorValue(value = "TUITION")
 public class TuitionLoan extends Loan {
 
     @Column(unique = true)

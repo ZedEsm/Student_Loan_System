@@ -1,4 +1,4 @@
 package entity.loan;
 
-public class HousingLoan extends Loan{
+public class HousingLoan extends Loan {
 }

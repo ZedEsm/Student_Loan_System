@@ -19,7 +19,8 @@ public class Loan {
     Long id;
     @Column(nullable = false)
     double price;
-    @OneToMany(mappedBy = "loan", fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "loan")
+    @ToString.Exclude
     List<StudentLoanPay> studentLoanPayList = new ArrayList<>();
 
     public Loan(double price) {

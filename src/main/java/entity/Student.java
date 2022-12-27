@@ -48,8 +48,9 @@ public class Student {
     @Enumerated(EnumType.STRING)
     Grade grade;
 
-    @OneToMany(mappedBy = "student", fetch = FetchType.EAGER)
-    List<StudentLoanPay> studentLoanPayList=new ArrayList<>();
+    @OneToMany(mappedBy = "student")
+    @ToString.Exclude
+    List<StudentLoanPay> studentLoanPayList = new ArrayList<>();
 
     public Student(UserInformation userInformation, String firstName, String lastName, String motherName, String fatherName, String birthCertificate, String nationalID, Date birthdate, String studentNumber, String universityName, UniversityType universityType, Date entryDate, Grade grade) {
         this.userInformation = userInformation;

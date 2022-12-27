@@ -9,7 +9,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 import javax.persistence.Query;
 
-public class LoanRepository implements  IRepository <Loan>{
+public class LoanRepository implements IRepository<Loan> {
     private static final LoanRepository LOAN_REPOSITORY = new LoanRepository();
 
     private LoanRepository() {
@@ -19,6 +19,7 @@ public class LoanRepository implements  IRepository <Loan>{
 
         return LOAN_REPOSITORY;
     }
+
     @Override
     public void save(Loan loan) {
         EntityManager entityManager = DatabaseAccess.getEntityManager().createEntityManager();
@@ -28,7 +29,7 @@ public class LoanRepository implements  IRepository <Loan>{
         entityManager.close();
     }
 
-    public TuitionLoan takeTuitionLoanByGrade(Grade grade){
+    public TuitionLoan takeTuitionLoanByGrade(Grade grade) {
         EntityManager entityManager = DatabaseAccess.getEntityManager().createEntityManager();
         entityManager.getTransaction().begin();
         Query query = entityManager.createQuery("from Loan t where t.grade=:grade");

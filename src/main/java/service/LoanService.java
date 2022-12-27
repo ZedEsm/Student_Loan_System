@@ -6,9 +6,11 @@ import enums.Grade;
 import repository.LoanRepository;
 
 public class LoanService {
-    private static final LoanService LOAN_SERVICE = new LoanService();;
+    private static final LoanService LOAN_SERVICE = new LoanService();
+    ;
 
     private static final LoanRepository LOAN_REPOSITORY = LoanRepository.getInstance();
+
     private LoanService() {
     }
 
@@ -22,8 +24,8 @@ public class LoanService {
         }
     }
 
-    public TuitionLoan takeTuitionLoanByGrade(Grade grade){
-       return LOAN_REPOSITORY.takeTuitionLoanByGrade(grade);
+    public TuitionLoan takeTuitionLoanByGrade(Grade grade) {
+        return LOAN_REPOSITORY.takeTuitionLoanByGrade(grade);
     }
 
 

@@ -4,9 +4,11 @@ import entity.loan.StudentLoanPay;
 import repository.StudentLoanPayRepository;
 
 public class StudentLoanPayService {
-    private static final StudentLoanPayService STUDENT_LOAN_PAY_SERVICE = new StudentLoanPayService();;
+    private static final StudentLoanPayService STUDENT_LOAN_PAY_SERVICE = new StudentLoanPayService();
+    ;
 
     private static final StudentLoanPayRepository STUDENT_LOAN_PAY_REPOSITORY = StudentLoanPayRepository.getInstance();
+
     private StudentLoanPayService() {
     }
 
@@ -15,7 +17,7 @@ public class StudentLoanPayService {
         return STUDENT_LOAN_PAY_SERVICE;
     }
 
-    public void save(StudentLoanPay studentLoanPay){
+    public void save(StudentLoanPay studentLoanPay) {
         STUDENT_LOAN_PAY_REPOSITORY.save(studentLoanPay);
     }
 

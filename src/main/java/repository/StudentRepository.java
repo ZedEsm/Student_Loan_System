@@ -8,7 +8,7 @@ import javax.persistence.Query;
 
 
 public class StudentRepository implements IRepository<Student> {
-    private static final StudentRepository STUDENT_REPOSITORY =  new StudentRepository();
+    private static final StudentRepository STUDENT_REPOSITORY = new StudentRepository();
 
     private StudentRepository() {
     }
