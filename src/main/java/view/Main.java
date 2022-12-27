@@ -2,8 +2,10 @@ package view;
 
 import entity.Student;
 import entity.UserInformation;
+
 import enums.Grade;
 import enums.UniversityType;
+import exceptions.InvalidStudentException;
 import exceptions.ValidationException;
 import service.StudentService;
 import util.Validation;
@@ -18,6 +20,8 @@ public class Main {
 
     private static final StudentService STUDENT_SERVICE = StudentService.getInstance();
 
+    private static Student student;
+
 
     public static void printMenu(String[] options) {
         for (String option : options) {
@@ -28,27 +32,113 @@ public class Main {
 
     public static void main(String[] args) {
         String[] options = {"1- Sign Up",
-//                "2- Option 2",
-//                "3- Option 3",
-//                "4- Exit",
+                "2- Sign In",
+                "3- Exit",
         };
 
         int option = 1;
-        while (option != 4) {
+        while (option != 3) {
             printMenu(options);
             try {
                 option = scanner.nextInt();
                 if (option == 1) {
                     signUp();
+                } else if (option == 2) {
+                    signIn();
                 }
             } catch (Exception ex) {
-                System.out.println("An unexpected error happened. Please try again");
+                System.out.println("Please try again");
                 scanner.next();
             }
 
         }
 
     }
+
+    private static void signIn() {
+        System.out.println("User Name: ");
+        String userName = scanner.next();
+
+        System.out.println("Password: ");
+        String password = scanner.next();
+
+        try {
+            student=STUDENT_SERVICE.signIn(userName, password);
+            System.out.println("Sign In Successfully");
+            loanMenu();
+        } catch (InvalidStudentException e) {
+            System.out.println(e.getMessage());
+        }
+
+    }
+
+    private static void loanMenu() {
+        String[] options = {"1- Register for loan",
+                "2- Reimbursement",
+                "3- Exit",
+        };
+
+        int option = 1;
+        while (option != 3) {
+            printMenu(options);
+            option = scanner.nextInt();
+            if (option == 1) {
+                loanSystem();
+
+            } else if (option == 2) {
+                reimbursementSystem();
+            }
+
+            scanner.next();
+        }
+
+    }
+
+    private static void reimbursementSystem() {
+
+    }
+
+
+    private static void loanSystem() {
+        String[] options = {"1- TuitionLoan",
+                "2- EducationLoan",
+                "3- HousingLoan",
+                "4- Exit",
+        };
+
+        int option = 1;
+        while (option != 4) {
+            printMenu(options);
+            option = scanner.nextInt();
+            if (option == 1) {
+                tuitionLoanSystem();
+
+            } else if (option == 2) {
+                educationLoanSystem();
+            }
+            else if (option == 3) {
+                housingLoanSystem();
+            }
+
+            scanner.next();
+        }
+    }
+
+    private static void educationLoanSystem() {
+
+    }
+
+    private static void housingLoanSystem() {
+
+    }
+
+    private static void tuitionLoanSystem() {
+        if(!student.getUniversityType().equals(UniversityType.STATE_DAILY)){
+
+        }
+
+    }
+
 
     private static void signUp() throws ParseException {
         System.out.println("First Name: ");

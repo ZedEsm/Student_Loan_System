@@ -1,4 +1,4 @@
-package entity;
+package entity.loan;
 
 import lombok.*;
 
@@ -13,7 +13,7 @@ import javax.persistence.*;
 public class Loan {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id", nullable = false)
+    @Column(name = "id")
     Long id;
     @Column(nullable = false)
     double price;

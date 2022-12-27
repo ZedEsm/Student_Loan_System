@@ -2,6 +2,7 @@ package service;
 
 
 import entity.Student;
+import exceptions.InvalidStudentException;
 import repository.StudentRepository;
 
 public class StudentService {
@@ -20,4 +21,12 @@ public class StudentService {
         STUDENT_REPOSITORY.save(student);
     }
 
+    public Student signIn(String userName, String password) throws InvalidStudentException {
+        Student student = STUDENT_REPOSITORY.checkUserExistence(userName, password);
+        if(student!=null){
+            return student;
+        }
+        throw new InvalidStudentException("Student with this username or password doesn't exist");
+
+    }
 }
